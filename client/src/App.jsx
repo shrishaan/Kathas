@@ -1,14 +1,20 @@
 import { Button } from "@/components/ui/button"
 import React from 'react'
+import { BrowserRouter, Route, Routes } from "react-router-dom"
+import Layout from "./Layout/Layout"
+import { RouteIndex } from "./helpers/RouteName"
+import Index from "./pages/Index"
 
 
 const App = () => {
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">SHRISHAAN</h1>
-
-      <Button>Shadcn Button</Button>
-    </div>
+    <BrowserRouter>
+     <Routes>
+      <Route path={RouteIndex} element={<Layout />} > {/* path will be dynamic */}
+      <Route index element={<Index />} />
+      </Route>
+     </Routes>
+    </BrowserRouter>
   )
 }
 
