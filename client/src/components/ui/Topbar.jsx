@@ -1,8 +1,28 @@
 import React from 'react'
+import logo from "@/assets/images/logo-white.png"
+import { Link } from 'react-router-dom';
+import { Button } from './Button';
+import { MdLogin } from "react-icons/md";
+import SearchBox from './SearchBox';
 
 const Topbar = () => {
   return (
-    <div>Topbar</div>
+    <div className='flex justify-between items-center h-16 fixed w-full z-20 bg-white px-5 border-b'>
+      <div>
+        <img src={logo} />
+      </div>
+      <div className='w-[500px]'>
+        <SearchBox />
+      </div>
+      <div>
+        <Button asChild>
+          <Link to="" className='rounded-full'>
+          <MdLogin />
+          Sign In
+          </Link>
+        </Button>
+      </div>
+    </div>
   )
 }
 
