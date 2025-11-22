@@ -2,7 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
-import mongoose from 'mongoose';
+import mongoose, { get } from 'mongoose';
 
 dotenv.config({ silent: true });
 
@@ -21,3 +21,13 @@ mongoose.connect(process.env.MONGODB_CONN,{dbName: 'kathas-blog'}).then(() => co
 app.listen(PORT, () => {
     console.log('Server is running on port', PORT);
 })
+
+app.use((err, req,res,next) => {
+    const statusCode = err.statusCode || 500 ;
+    const message = err.message || 'Internal Server Error';
+    res.status(statusCode).json({
+        success: false,
+        statusCode,
+        message
+    })
+});
