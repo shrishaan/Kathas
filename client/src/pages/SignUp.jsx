@@ -35,8 +35,12 @@ const SignUp = () => {
         },
       });
     
-      function onSubmit(values) {
-        console.log(values);
+      async function onSubmit(values) {
+        try {
+          const response = await fetch(``)
+        } catch (error) {
+          
+        }
       }
       
   return (
@@ -93,7 +97,7 @@ const SignUp = () => {
                   <FormItem>
                     <FormLabel>Password</FormLabel>
                     <FormControl>
-                      <Input placeholder="Enter your password" {...field} />
+                      <Input type="password" placeholder="Enter your password" {...field} />
                     </FormControl>
 
                     <FormMessage />
@@ -109,7 +113,7 @@ const SignUp = () => {
                   <FormItem>
                     <FormLabel>Confirm Password</FormLabel>
                     <FormControl>
-                      <Input placeholder="Enter your password again" {...field} />
+                      <Input type="password" placeholder="Enter your password again" {...field} />
                     </FormControl>
 
                     <FormMessage />
