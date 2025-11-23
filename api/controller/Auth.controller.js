@@ -1,6 +1,6 @@
 import { handleError } from "../helpers/handleError.js";
 import User from "../models/user.model.js";
-import * as bcryptjs from 'bcryptjs'; 
+import bcryptjs from 'bcryptjs'; 
 
 export const Register = async (req, res, next) => { 
     try{
@@ -10,7 +10,7 @@ export const Register = async (req, res, next) => {
             next(handleError(409, 'User already registered.'));
         }
 
-        const hashedPassword = bcryptjs.hashSycn(password, 10);
+        const hashedPassword = bcryptjs.hashSync(password, 10);
 
         //Register User
         const user = new User({
