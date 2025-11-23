@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import mongoose, { get } from 'mongoose';
+import AuthRoute from './routes/Auth.route.js';
 
 dotenv.config({ silent: true });
 
@@ -15,6 +16,9 @@ app.use(cors({
     origin: process.env.FRONTEND_URL,
     credentials: true,
 }))
+
+//route Setup
+app.use('/api/auth', AuthRoute);
 
 mongoose.connect(process.env.MONGODB_CONN,{dbName: 'kathas-blog'}).then(() => console.log('Database connected successfully')).catch(err => console.log('Database connection failed', err));
 
