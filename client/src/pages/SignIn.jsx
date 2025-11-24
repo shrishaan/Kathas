@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -12,12 +12,14 @@ import React from "react";
 import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
-import { RouteSignUp } from "@/helpers/RouteName";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import { RouteIndex, RouteSignUp } from "@/helpers/RouteName";
 import { Card } from "@/components/ui/card";
+import { getEnv } from "@/helpers/getEnv";
+import { showToast } from "@/helpers/showToast";
 
 const SignIn = () => {
-    
+  const navigate = useNavigate();
   const formSchema = z.object({
     email: z.string().email(),
     password: z.string().min(8, "Password must be at least 8 characters long"),
@@ -31,8 +33,29 @@ const SignIn = () => {
     },
   });
 
-  function onSubmit(values) {
-    console.log(values);
+  async function onSubmit(values) {
+    try {
+      const response = await fetch(
+        `${getEnv("VITE_API_BASE_URL")}/auth/login`,
+        {
+          method: "post",
+          headers: { "Content-Type": "application/json" },
+          credentials:'include', // to include cookies
+          body: JSON.stringify(values),
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        showToast("error", data.message);
+      }
+
+      navigate(RouteIndex);
+      showToast("success", data.message);
+    } catch (error) {
+      showToast("error", error.message);
+    }
   }
 
   return (
@@ -70,7 +93,11 @@ const SignIn = () => {
                   <FormItem>
                     <FormLabel>Password</FormLabel>
                     <FormControl>
-                      <Input type="password" placeholder="Enter your password" {...field} />
+                      <Input
+                        type="password"
+                        placeholder="Enter your password"
+                        {...field}
+                      />
                     </FormControl>
 
                     <FormMessage />
@@ -82,11 +109,15 @@ const SignIn = () => {
               <Button type="submit" className="w-full">
                 Sign In
               </Button>
-              <div className='mt-5 text-sm flex justify-center items-center gap-2'>
+              <div className="mt-5 text-sm flex justify-center items-center gap-2">
                 <p>Don&apos;t have account?</p>
-                <Link className='text-blue-500 hover:underline' to={RouteSignUp}>Sign Up</Link>
+                <Link
+                  className="text-blue-500 hover:underline"
+                  to={RouteSignUp}
+                >
+                  Sign Up
+                </Link>
               </div>
-
             </div>
           </form>
         </Form>
