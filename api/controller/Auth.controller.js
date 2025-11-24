@@ -44,7 +44,29 @@ export const Login = async (req, res, next) => {
             next(handleError(404, 'Invalid Login Credentials.'));
         }
 
-        const token = jwt.sign
+        const token = jwt.sign({
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            avatar: user.avatar
+        }, process.env.JWT_SECRET);
+
+        res.cookie('access_token', token,{
+            httpOnly: true, 
+            secure: process.env.NODE_ENV === 'production', // Set secure flag in production
+            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict',
+            path: '/'
+        })
+
+        const newUser = user.toObject({getters:true});
+        delete newUser.password;
+
+        res.status(200).json({
+            success:true,
+            newUser,
+            message: 'User logged in successfully'
+        })
+
     } catch (error) {
          next(handleError(500, error.message));
     }
