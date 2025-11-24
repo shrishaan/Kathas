@@ -1,6 +1,7 @@
 import { handleError } from "../helpers/handleError.js";
 import User from "../models/user.model.js";
 import bcryptjs from 'bcryptjs'; 
+import jwt from 'jsonwebtoken';
 
 export const Register = async (req, res, next) => { 
     try{
@@ -30,4 +31,21 @@ export const Register = async (req, res, next) => {
     }
 }
 
-export const Login = async (req, res) => { };
+export const Login = async (req, res, next) => { 
+    try {
+        const {email, password} = req.body;
+        const user = await User.findOne({email});
+        if(!user){
+            
+        }
+        const hashedPassword = user.password;
+        const comparePassword = bcryptjs.compare(password, hashedPassword);
+        if(!comparePassword){
+            next(handleError(404, 'Invalid Login Credentials.'));
+        }
+
+        const token = jwt.sign
+    } catch (error) {
+         next(handleError(500, error.message));
+    }
+};
