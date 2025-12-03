@@ -49,12 +49,13 @@ const SignIn = () => {
 
       if (!response.ok) {
         showToast("error", data.message);
+        return;
       }
 
       navigate(RouteIndex);
       showToast("success", data.message);
     } catch (error) {
-      showToast("error", error.message);
+     return showToast("error", error.message);
     }
   }
 

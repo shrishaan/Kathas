@@ -17,6 +17,8 @@ import { RouteSignIn } from "@/helpers/RouteName";
 import { Card } from "@/components/ui/card";
 import { getEnv } from "@/helpers/getEnv";
 import { showToast } from "@/helpers/showToast";
+import GoogleLogin from "@/components/ui/GoogleLogin";
+
 
 
 const SignUp = () => {
@@ -54,11 +56,12 @@ const SignUp = () => {
 
           if(!response.ok){
             showToast('error', data.message );
+            return;
           }
           navigate(RouteSignIn);
           showToast('success', data.message );
         } catch (error) {
-                    showToast('error', error.message );
+                  return showToast('error', error.message );
 
         }
       }
@@ -69,6 +72,13 @@ const SignUp = () => {
         <h1 className="text-2x1 font-bold text-center mb-5">
           Create New Account
         </h1>
+        <div>
+          <GoogleLogin />
+          <div className="border my-5 flex justify-center items-center">
+            <span className=" absolute bg-white text-sm p-1">Or</span>
+          </div>
+        </div>
+
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <div className="mb-3">
