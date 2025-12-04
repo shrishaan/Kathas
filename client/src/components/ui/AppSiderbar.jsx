@@ -8,11 +8,11 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/components/ui/sidebar"
+} from "@/components/ui/sidebar";
 
-import React from 'react'
-import { Link } from "react-router-dom"
-import logo from "@/assets/images/logo-white.png"
+import React from "react";
+import { Link } from "react-router-dom";
+import logo from "@/assets/images/logo-white.png";
 import { IoHomeOutline } from "react-icons/io5";
 import { BiCategoryAlt } from "react-icons/bi";
 import { GrBlog } from "react-icons/gr";
@@ -23,62 +23,77 @@ import { GoDot } from "react-icons/go";
 const AppSiderbar = () => {
   return (
     <Sidebar>
-      <SidebarHeader classname="bg-white"> 
+      <SidebarHeader className="bg-white">
         <img src={logo} width={120} alt="" />
       </SidebarHeader>
-      <SidebarContent classname="bg-white">
+
+      <SidebarContent className="bg-white">
         <SidebarGroup>
-        <SidebarMenu>
+          <SidebarMenu>
             <SidebarMenuItem>
-                <SidebarMenuButton>
+              <SidebarMenuButton asChild>
+                <Link to="">
                   <IoHomeOutline />
-                    <Link to="">Home</Link> {/* to means which route to pass */}
-                </SidebarMenuButton>
+                  Home
+                </Link>
+              </SidebarMenuButton>
             </SidebarMenuItem>
+
             <SidebarMenuItem>
-              <SidebarMenuItem>
-                <SidebarMenuButton>
+              <SidebarMenuButton asChild>
+                <Link to="">
                   <BiCategoryAlt />
-                    <Link to="">Categories</Link> 
-                </SidebarMenuButton>
+                  Categories
+                </Link>
+              </SidebarMenuButton>
             </SidebarMenuItem>
-                <SidebarMenuButton>
+
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild>
+                <Link to="">
                   <GrBlog />
-                    <Link to="">Blogs</Link> 
-                </SidebarMenuButton>
-                <SidebarMenuItem>
-                <SidebarMenuButton>
+                  Blogs
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild>
+                <Link to="">
                   <FaRegComments />
-                    <Link to="">Comments</Link> 
-                </SidebarMenuButton>
-                <SidebarMenuItem>
-                <SidebarMenuButton>
+                  Comments
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild>
+                <Link to="">
                   <LuUsers />
-                    <Link to="">Users</Link> 
-                </SidebarMenuButton>
+                  Users
+                </Link>
+              </SidebarMenuButton>
             </SidebarMenuItem>
-            </SidebarMenuItem>
-            </SidebarMenuItem>
-        </SidebarMenu>
+          </SidebarMenu>
         </SidebarGroup>
 
         <SidebarGroup>
-          <SidebarGroupLabel>
-            Categories
-          </SidebarGroupLabel>
-        <SidebarMenu>
+          <SidebarGroupLabel>Categories</SidebarGroupLabel>
+
+          <SidebarMenu>
             <SidebarMenuItem>
-                <SidebarMenuButton>
+              <SidebarMenuButton asChild>
+                <Link to="">
                   <GoDot />
-                    <Link to="">Category Item</Link> 
-                </SidebarMenuButton>
+                  Category Item
+                </Link>
+              </SidebarMenuButton>
             </SidebarMenuItem>
-        </SidebarMenu>
+          </SidebarMenu>
         </SidebarGroup>
       </SidebarContent>
-
     </Sidebar>
-  )
-}
+  );
+};
 
 export default AppSiderbar;
