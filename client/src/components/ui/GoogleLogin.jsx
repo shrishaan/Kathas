@@ -39,7 +39,7 @@ const GoogleLogin = () => {
                showToast("error", data.message);
                return;
             }
-            dispatch(setUser(data.user));
+             dispatch(setUser(data.user));
              navigate(RouteIndex);
              showToast("success", data.message);
            } catch (error) {
