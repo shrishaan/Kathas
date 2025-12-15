@@ -22,4 +22,3 @@ export const store = configureStore({
 
 export const persistor = persistStore(store);
 
-i dont know what i am doing with my life 
