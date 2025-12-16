@@ -86,7 +86,12 @@ export const GoogleLogin = async (req, res, next) => {
                 name, email, password: hashedPassword, avatar
             })
             user = await newUser.save();
-        }
+        }else {
+      if (!user.avatar && avatar) {
+        user.avatar = avatar;
+        await user.save();
+      }
+    }
 
         const token = jwt.sign({
             _id: user._id,
@@ -109,6 +114,25 @@ export const GoogleLogin = async (req, res, next) => {
             success:true,
             user:newUser,
             message: 'User logged in successfully'
+        })
+
+    } catch (error) {
+        return next(handleError(500, error.message));
+    }
+};
+
+export const Logout = async (req, res, next) => { 
+    try {
+        res.clearCookie('access_token',{
+            httpOnly: true, 
+            secure: process.env.NODE_ENV === 'production', 
+            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict',
+            path: '/'
+        })
+
+        res.status(200).json({
+            success:true,
+            message: 'User logged out successfully'
         })
 
     } catch (error) {
