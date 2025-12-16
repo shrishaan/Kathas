@@ -3,13 +3,14 @@ import { toast } from "react-toastify";
 export const showToast = (type, message) => {
   const config = {
     position: "top-right",
-    autoClose: 5000,
+    autoClose: 2000,
     hideProgressBar: false,
     closeOnClick: false,
     pauseOnHover: true,
     draggable: true,
     progress: undefined,
     theme: "light",
+    style: { top: "4.5rem" }
   };
   if(type === 'success'){
     toast.success(message, config);
