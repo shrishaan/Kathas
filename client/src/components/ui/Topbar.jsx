@@ -22,6 +22,9 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import usericon from "@/assets/images/user.png";
+import { FaRegUser } from "react-icons/fa";
+import { FaPlus } from "react-icons/fa";
+import { IoLogOutOutline } from "react-icons/io5";
 
 const Topbar = () => {
   const user = useSelector((state) => state.user);
@@ -55,8 +58,24 @@ const Topbar = () => {
                 <p className="text-sm">{user.user.email}</p>
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>
-                <Link to="">Profile</Link>
+              <DropdownMenuItem asChild>
+                <Link to="">
+                <FaRegUser />
+                Profile
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link to="">
+                <FaPlus />
+                Create Blog
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem asChild>
+                <Link to="">
+                <IoLogOutOutline color="red"/> 
+                Log Out
+                </Link>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
