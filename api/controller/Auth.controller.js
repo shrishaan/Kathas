@@ -130,7 +130,7 @@ export const Logout = async (req, res, next) => {
             path: '/'
         })
 
-        res.status(200).json({
+        res.status(200).json({   
             success:true,
             message: 'User logged out successfully'
         })
@@ -139,3 +139,6 @@ export const Logout = async (req, res, next) => {
         return next(handleError(500, error.message));
     }
 };
+
+
+i dunot
