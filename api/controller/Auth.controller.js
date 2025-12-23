@@ -139,6 +139,3 @@ export const Logout = async (req, res, next) => {
         return next(handleError(500, error.message));
     }
 };
-
-
-i dunot
