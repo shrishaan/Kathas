@@ -96,9 +96,9 @@ const Topbar = () => {
                     e.currentTarget.src = usericon;
                   }}
                 />
-                <AvatarFallback>
+                {/* <AvatarFallback>
                   {user.user?.name?.charAt(0).toUpperCase()}
-                </AvatarFallback>
+                </AvatarFallback> */}
               </Avatar>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
