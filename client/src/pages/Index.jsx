@@ -36,7 +36,7 @@ const Index = () => {
         alignItems: "center",
         width: "100%",
         borderRadius: "8px",
-        height: "70vh",
+        height: "50vh",
         background: "#1a1a1a",
         overflow: "hidden",
       }}
