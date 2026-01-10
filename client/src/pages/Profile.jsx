@@ -1,6 +1,6 @@
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
-import React from "react";
+import React, { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -19,6 +19,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Textarea } from "@/components/ui/textarea";
 import { useFetch } from "@/hooks/useFetch";
+import Loading from "@/components/ui/Loading";
+import { IoCameraOutline } from "react-icons/io5";
 
 const Profile = () => {
 
@@ -29,8 +31,6 @@ const Profile = () => {
     method: "get",
     credentials: "include",
   });
-
-  console.log(userData);
 
   const dispatch = useDispatch();
 
@@ -50,6 +50,17 @@ const Profile = () => {
       password: "",
     },
   });
+
+  useEffect(() => {
+    if(userData && userData.success){
+      form.reset({
+        name: userData.user.name,
+        email: userData.user.email,
+        bio: userData.user.bio,
+      })
+    }
+  }, [userData]);
+  
 
   async function onSubmit(values) {
     try {
@@ -76,12 +87,18 @@ const Profile = () => {
     }
   }
 
+  if(loading) return <Loading />;
+
   return (
     <Card className="max-w-screen-md mx-auto">
+      
       <CardContent>
         <div className="flex justify-center items-center mt-10">
-          <Avatar className="w-28 h-28">
-            <AvatarImage src="https://github.com/shadcn.png" />
+          <Avatar className="w-28 h-28 relative">
+            <AvatarImage src={userData?.user?.avatar} />
+            <div className="absolute z-10 w-full h-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex justify-center items-center bg-black bg-opacity-10 opacity-0 hover:opacity-100 transition-opacity cursor-pointer rounded-full border-2 border-blue-500">
+              <IoCameraOutline color="#2563EB"/>
+            </div>
           </Avatar>
         </div>
         <div>
