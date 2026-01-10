@@ -1,6 +1,6 @@
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -21,8 +21,13 @@ import { Textarea } from "@/components/ui/textarea";
 import { useFetch } from "@/hooks/useFetch";
 import Loading from "@/components/ui/Loading";
 import { IoCameraOutline } from "react-icons/io5";
+import Dropzone from "react-dropzone";
+import { setUser } from "@/redux/user/user.slice";
 
 const Profile = () => {
+
+    const [filePreview, setPreview] = useState();
+    const [file, setFile] = useState();
 
     const user = useSelector((state) => state.user);
 
@@ -64,11 +69,15 @@ const Profile = () => {
 
   async function onSubmit(values) {
     try {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("data", JSON.stringify(values));
+
       const response = await fetch(
-        `${getEnv("VITE_API_BASE_URL")}/auth/login`,
+        `${getEnv("VITE_API_BASE_URL")}/user/update-user/${user.user._id}`,
         {
-          method: "post",
-          headers: { "Content-Type": "application/json" },
+          method: "put",
+          //multi part form data is by default in header 
           credentials: "include", // to include cookies
           body: JSON.stringify(values),
         }
@@ -87,6 +96,13 @@ const Profile = () => {
     }
   }
 
+  const handleFileSelection = (files) => {
+    const file = files[0];
+    const preview = URL.createObjectURL(file);
+    setFile(file); 
+    setPreview(preview);
+  }
+
   if(loading) return <Loading />;
 
   return (
@@ -94,13 +110,26 @@ const Profile = () => {
       
       <CardContent>
         <div className="flex justify-center items-center mt-10">
-          <Avatar className="w-28 h-28 relative">
-            <AvatarImage src={userData?.user?.avatar} />
+
+          <Dropzone onDrop={acceptedFiles => handleFileSelection(acceptedFiles)}>
+  {({getRootProps, getInputProps}) => (
+    
+      <div {...getRootProps()}>
+        <input {...getInputProps()} />
+        <Avatar className="w-28 h-28 relative">
+            <AvatarImage src={filePreview ? filePreview : userData?.user?.avatar} />
             <div className="absolute z-10 w-full h-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex justify-center items-center bg-black bg-opacity-10 opacity-0 hover:opacity-100 transition-opacity cursor-pointer rounded-full border-2 border-blue-500">
               <IoCameraOutline color="#2563EB"/>
             </div>
           </Avatar>
+      </div>
+   
+  )}
+</Dropzone>
+
+         
         </div>
+
         <div>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
