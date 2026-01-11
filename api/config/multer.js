@@ -7,12 +7,12 @@ const storage = multer.diskStorage({
 });
 
 function fileFilter(req, file, cb) {
-  const allowedFiles = ["image/png", "image/jpg", "image/jpeg", "image/webp"];
+  const allowedFiles = ["image/png", "image/jpg", "image/jpeg"];
   if (!allowedFiles.includes(file.mimetype)) {
-    // To reject this file pass `false`, like so:
+    // To reject this file pass `false`
     cb(new Error("Only images are allowed."), false);
   } else {
-    // To accept the file pass `true`, like so:
+    // To accept the file pass `true
     cb(null, true);
   }
 }

@@ -5,6 +5,6 @@ import upload from "../config/multer.js";
 const UserRoute = express.Router();
 
 UserRoute.get("/get-user/:userid", getUser);
-UserRoute.put("/update-user/:userid", upload.single(), updateUser);
+UserRoute.put("/update-user/:userid", upload.single('file'), updateUser);
 
 export default UserRoute;
