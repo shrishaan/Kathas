@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/Button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { RouteAddCategory } from "@/helpers/RouteName";
-import React from "react";
+import { RouteAddCategory, RouteEditCategory } from "@/helpers/RouteName";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   Table,
@@ -15,18 +15,31 @@ import {
 import { getEnv } from "@/helpers/getEnv";
 import Loading from "@/components/ui/Loading";
 import { useFetch } from "@/hooks/useFetch";
+import { FiEdit } from "react-icons/fi";
+import { FaRegTrashAlt } from "react-icons/fa";
+import { showToast } from "@/helpers/showToast";
+import { set } from "zod";
+import { deleteData } from "@/helpers/handleDelete";
 
 const CategoryDetails = () => {
-  const {
-    data: categoryData,
-    loading,
-    error,
-  } = useFetch(`${getEnv("VITE_API_BASE_URL")}/category/all-category`, {
+
+    const [refreshData, setRefreshData] = useState(false);
+
+
+  const { data: categoryData, loading, error} = useFetch(`${getEnv("VITE_API_BASE_URL")}/category/all-category`, {
     method: "get",
     credentials: "include",
-  });
+  }, [refreshData]);
 
-  console.log(categoryData);
+  const handleDelete = async (id) => {
+    const response = await deleteData(`${getEnv('VITE_API_BASE_URL')}/category/delete/${id}`); 
+    if(response){
+        setRefreshData(!refreshData);
+        showToast('success', 'Category deleted successfully.');
+    }else{
+        showToast('error', 'Failed to delete category.');
+    }
+  }
 
   if (loading) return <Loading />;
 
@@ -55,7 +68,28 @@ const CategoryDetails = () => {
                   <TableRow key={category._id}>
                     <TableCell>{category.name}</TableCell>
                     <TableCell>{category.slug}</TableCell>
-                    <TableCell></TableCell>
+                    <TableCell className="flex gap-3">
+                        <Button variant="outline" className="relative h-9 w-9 cursor-pointer
+        ring-2 ring-blue-500/60
+        transition-all duration-300
+        hover:ring-4 hover:ring-blue-600
+        hover:scale-105
+        focus:outline-none
+        focus:ring-4 focus:ring-blue-600" >
+                            <Link to={RouteEditCategory(category._id)}>
+                            <FiEdit/>
+                            </Link>
+                        </Button>
+                        <Button variant="outline" className="relative h-9 w-9 cursor-pointer
+        ring-2 ring-red-500/60
+        transition-all duration-300
+        hover:ring-4 hover:ring-red-600
+        hover:scale-105
+        focus:outline-none
+        focus:ring-4 focus:ring-red-600" onClick={() => handleDelete(category._id)}>
+                            <FaRegTrashAlt/>
+                        </Button>
+                    </TableCell>
                   </TableRow>
                 ))
               ) : (
