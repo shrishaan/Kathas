@@ -26,45 +26,52 @@ const SignUp = () => {
   const navigate = useNavigate();
 
     const formSchema = z.object({
-        name: z.string().min(3,'Name must be at least 3 characters long.'),
-        email: z.string().email(),
-        password: z.string().min(8, "Password must be at least 8 characters long."),
-        confirmPassword: z.string().refine( data => data.password == data.confirmPassword, { message: 'Passwords do not match.', path:['confirmPassword']}),
-      });
-    
-      const form = useForm({
-        resolver: zodResolver(formSchema),
-        defaultValues: {
-            name:"",
-          email: "",
-          password: "",
-          confirmPassword: "",
-        },
-      });
+      name: z.string().min(3, "Name must be at least 3 characters long."),
+      email: z.string().email(),
+      password: z
+        .string()
+        .min(8, "Password must be at least 8 characters long."),
+      confirmPassword: z
+        .string()
+        .refine((data) => data.password == data.confirmPassword, {
+          message: "Passwords do not match.",
+          path: ["confirmPassword"],
+        }),
+    });
 
-    console.log(getEnv('VITE_API_BASE_URL'));
+    const form = useForm({
+      resolver: zodResolver(formSchema),
+      defaultValues: {
+        name: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+      },
+    });
 
-      async function onSubmit(values) {
-        try {
-          const response = await fetch(`${getEnv('VITE_API_BASE_URL')}/auth/register`,{
-            method:'post',
-            headers: {'Content-Type':'application/json'},
-            body: JSON.stringify(values)
-          })
-
-          const data = await response.json();
-
-          if(!response.ok){
-            showToast('error', data.message );
-            return;
+    async function onSubmit(values) {
+      try {
+        const response = await fetch(
+          `${getEnv("VITE_API_BASE_URL")}/auth/register`,
+          {
+            method: "post",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(values),
           }
-          navigate(RouteSignIn);
-          showToast('success', data.message );
-        } catch (error) {
-                  return showToast('error', error.message );
+        );
 
+        const data = await response.json();
+
+        if (!response.ok) {
+          showToast("error", data.message);
+          return;
         }
+        navigate(RouteSignIn);
+        showToast("success", data.message);
+      } catch (error) {
+        return showToast("error", error.message);
       }
+    }
       
   return (
      <div className="flex justify-center items-center h-screen w-screen">
