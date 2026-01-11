@@ -27,6 +27,7 @@ import { setUser } from "@/redux/user/user.slice";
 const Profile = () => {
 
     const [filePreview, setPreview] = useState();
+
     const [file, setFile] = useState();
 
     const user = useSelector((state) => state.user);
@@ -42,8 +43,8 @@ const Profile = () => {
   const formSchema = z.object({
     name: z.string().min(3, "Name must be at least 3 characters long"),
     email: z.string().email(),
-    bio: z.string().min(3, "Bio must be at least 3 characters long"),
-    password: z.string(),
+    bio: z.string().min(4, "Bio must be at least 4 characters long"),
+    
   });
 
   const form = useForm({
@@ -79,7 +80,7 @@ const Profile = () => {
           method: "put",
           //multi part form data is by default in header 
           credentials: "include", // to include cookies
-          body: JSON.stringify(values),
+          body: formData
         }
       );
 
