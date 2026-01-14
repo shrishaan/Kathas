@@ -1,7 +1,6 @@
+import React from 'react'
 import { Button } from "@/components/ui/Button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { RouteAddCategory, RouteEditCategory } from "@/helpers/RouteName";
-import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   Table,
@@ -12,44 +11,17 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { getEnv } from "@/helpers/getEnv";
-import Loading from "@/components/ui/Loading";
-import { useFetch } from "@/hooks/useFetch";
-import { FiEdit } from "react-icons/fi";
-import { FaRegTrashAlt } from "react-icons/fa";
-import { showToast } from "@/helpers/showToast";
-import { set } from "zod";
-import { deleteData } from "@/helpers/handleDelete";
-
-const CategoryDetails = () => {
-
-    const [refreshData, setRefreshData] = useState(false);
+import { RouteBlogAdd } from '@/helpers/RouteName';
 
 
-  const { data: categoryData, loading, error} = useFetch(`${getEnv("VITE_API_BASE_URL")}/category/all-category`, {
-    method: "get",
-    credentials: "include",
-  }, [refreshData]);
-
-  const handleDelete = async (id) => {
-    const response = await deleteData(`${getEnv('VITE_API_BASE_URL')}/category/delete/${id}`); 
-    if(response){
-        setRefreshData(!refreshData);
-        showToast('success', 'Category deleted successfully.');
-    }else{
-        showToast('error', 'Failed to delete category.');
-    }
-  }
-
-  if (loading) return <Loading />;
-
+const BlogDetails = () => {
   return (
-    <div>
+     <div>
       <Card>
         <CardHeader>
           <div>
             <Button asChild>
-              <Link to={RouteAddCategory}>Add Category</Link>
+              <Link to={RouteBlogAdd}>Add Blog</Link>
             </Button>
           </div>
         </CardHeader>
@@ -57,13 +29,16 @@ const CategoryDetails = () => {
           <Table>
             <TableHeader>
               <TableRow>
+                <TableHead>Author</TableHead>
                 <TableHead>Category</TableHead>
+                <TableHead>Title</TableHead>
                 <TableHead>Slug</TableHead>
+                <TableHead>Dated</TableHead>
                 <TableHead>Action </TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {categoryData && categoryData.category.length > 0 ? (
+              {/* {categoryData && categoryData.category.length > 0 ? (
                 categoryData.category.map(category => (
                   <TableRow key={category._id}>
                     <TableCell>{category.name}</TableCell>
@@ -84,13 +59,13 @@ const CategoryDetails = () => {
                 <TableRow>
                   <TableCell colSpan="3">Data Not Found.</TableCell>
                 </TableRow>
-              )}
+              )} */}
             </TableBody>
           </Table>
         </CardContent>
       </Card>
     </div>
-  );
-};
+  )
+}
 
-export default CategoryDetails;
+export default BlogDetails;
