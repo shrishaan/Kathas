@@ -94,3 +94,6 @@ const CategoryDetails = () => {
 };
 
 export default CategoryDetails;
+
+
+FK BITCHES
