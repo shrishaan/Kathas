@@ -26,17 +26,22 @@ import { setUser } from "@/redux/user/user.slice";
 
 const Profile = () => {
 
-    const [filePreview, setPreview] = useState();
+  const [filePreview, setPreview] = useState();
+  const [file, setFile] = useState();
 
-    const [file, setFile] = useState();
-
-    const user = useSelector((state) => state.user);
+  const user = useSelector((state) => state.user);
 
   const {
-    data: userData, loading, error } = useFetch(`${getEnv("VITE_API_BASE_URL")}/user/get-user/${user.user._id}`, {
-    method: "get",
-    credentials: "include",
-  });
+    data: userData,
+    loading,
+    error,
+  } = useFetch(
+    `${getEnv("VITE_API_BASE_URL")}/user/get-user/${user.user._id}`,
+    {
+      method: "get",
+      credentials: "include",
+    }
+  );
 
   const dispatch = useDispatch();
 
@@ -44,7 +49,6 @@ const Profile = () => {
     name: z.string().min(3, "Name must be at least 3 characters long"),
     email: z.string().email(),
     bio: z.string().min(4, "Bio must be at least 4 characters long"),
-    
   });
 
   const form = useForm({
@@ -58,15 +62,14 @@ const Profile = () => {
   });
 
   useEffect(() => {
-    if(userData && userData.success){
+    if (userData && userData.success) {
       form.reset({
         name: userData.user.name,
         email: userData.user.email,
         bio: userData.user.bio,
-      })
+      });
     }
   }, [userData]);
-  
 
   async function onSubmit(values) {
     try {
@@ -78,9 +81,9 @@ const Profile = () => {
         `${getEnv("VITE_API_BASE_URL")}/user/update-user/${user.user._id}`,
         {
           method: "put",
-          //multi part form data is by default in header 
+          //multi part form data is by default in header
           credentials: "include", // to include cookies
-          body: formData
+          body: formData,
         }
       );
 
@@ -100,35 +103,33 @@ const Profile = () => {
   const handleFileSelection = (files) => {
     const file = files[0];
     const preview = URL.createObjectURL(file);
-    setFile(file); 
+    setFile(file);
     setPreview(preview);
-  }
+  };
 
-  if(loading) return <Loading />;
+  if (loading) return <Loading />;
 
   return (
     <Card className="max-w-screen-md mx-auto">
-      
       <CardContent>
         <div className="flex justify-center items-center mt-10">
-
-          <Dropzone onDrop={acceptedFiles => handleFileSelection(acceptedFiles)}>
-  {({getRootProps, getInputProps}) => (
-    
-      <div {...getRootProps()}>
-        <input {...getInputProps()} />
-        <Avatar className="w-28 h-28 relative">
-            <AvatarImage src={filePreview ? filePreview : userData?.user?.avatar} />
-            <div className="absolute z-10 w-full h-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex justify-center items-center bg-black bg-opacity-10 opacity-0 hover:opacity-100 transition-opacity cursor-pointer rounded-full border-2 border-blue-500">
-              <IoCameraOutline color="#2563EB"/>
-            </div>
-          </Avatar>
-      </div>
-   
-  )}
-</Dropzone>
-
-         
+          <Dropzone
+            onDrop={(acceptedFiles) => handleFileSelection(acceptedFiles)}
+          >
+            {({ getRootProps, getInputProps }) => (
+              <div {...getRootProps()}>
+                <input {...getInputProps()} />
+                <Avatar className="w-28 h-28 relative">
+                  <AvatarImage
+                    src={filePreview ? filePreview : userData?.user?.avatar}
+                  />
+                  <div className="absolute z-10 w-full h-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex justify-center items-center bg-black bg-opacity-10 opacity-0 hover:opacity-100 transition-opacity cursor-pointer rounded-full border-2 border-blue-500">
+                    <IoCameraOutline color="#2563EB" />
+                  </div>
+                </Avatar>
+              </div>
+            )}
+          </Dropzone>
         </div>
 
         <div>
