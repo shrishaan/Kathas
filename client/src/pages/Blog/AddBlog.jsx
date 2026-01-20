@@ -26,8 +26,14 @@ import {
 import { useFetch } from "@/hooks/useFetch";
 import Dropzone from "react-dropzone";
 import Editor from "@/components/ui/Editor";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RouteBlog } from "@/helpers/RouteName";
 
 const AddBlog = () => {
+
+  const navigate = useNavigate();
+  const user = useSelector((state) => state.user);
 
   const [filePreview, setPreview] = useState();
   const [file, setFile] = useState();
@@ -58,7 +64,7 @@ const AddBlog = () => {
 
   const handleEditorData = (event, editor) => {
     const data = editor.getData();
-    console.log(data);
+    form.setValue("blogContent", data);
     
   }
 
@@ -72,24 +78,40 @@ const AddBlog = () => {
   }, [blogTitle]);
 
   async function onSubmit(values) {
-    console.log(values);
+    try {
+      const newValues = { ...values, author: user.user._id };
+      if(!file){
+        showToast("error", "Please select a featured image");
+        return;
+      }
+          const formData = new FormData();
+          formData.append("file", file);
+          formData.append("data", JSON.stringify(newValues));
+
+          const response = await fetch(`${getEnv("VITE_API_BASE_URL")}/blog/add`, {
+              method: "post",
+              //multi part form data is by default in header
+              credentials: "include", // to include cookies
+              body: formData,
+            }
+            
+          ); 
     
-    // try {
-    //   const response = await fetch(`${getEnv('VITE_API_BASE_URL')}/category/add`,{
-    //     method:'post',
-    //     headers: {'Content-Type':'application/json'},
-    //     body: JSON.stringify(values)
-    //   })
-    //   const data = await response.json();
-    //   if(!response.ok){
-    //     showToast('error', data.message );
-    //     return;
-    //   }
-    //   form.reset();
-    //   showToast('success', data.message );
-    // } catch (error) {
-    //           return showToast('error', error.message );
-    // }
+          const data = await response.json();
+    
+          if (!response.ok) {
+            showToast("error", data.message);
+            return;
+          }
+          form.reset();
+          setFile();
+          setPreview();   
+          navigate(RouteBlog);
+          showToast("success", data.message);
+
+        } catch (error) {
+          return showToast("error", error.message);
+        }
   }
 
   const handleFileSelection = (files) => {
@@ -112,13 +134,13 @@ const AddBlog = () => {
                   <FormItem>
                     <FormLabel>Category</FormLabel>
                     <FormControl>
-                      <Select>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
                         <SelectTrigger>
                           <SelectValue placeholder="Select a category" />
                         </SelectTrigger>
                         <SelectContent>
                           {categoryData &&
-                            categoryData.category.length > 0 &&
+                            categoryData?.category?.length > 0 &&
                             categoryData.category.map((category) => (
                               <SelectItem key={category._id} value={category._id}> {category.name}
                               </SelectItem>
