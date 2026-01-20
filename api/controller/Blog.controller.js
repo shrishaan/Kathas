@@ -60,7 +60,43 @@ export const editBlog = async (req, res, next) => {
 
 export const updateBlog = async (req, res, next) => {
     try {
+        const {blogid} = req.params;
+        const data = JSON.parse(req.body.data);
+        const blog = await Blog.findById(blogid);
+        if(!blog) {
+            return next(handleError(404, 'Data not found.'));
+        }
         
+        blog.category = data.category;
+        blog.title = data.title;
+        blog.slug = data.slug;
+        blog.blogContent = encode(data.blogContent);
+
+        let featuredImage = blog.featuredImage;
+        if (req.file) {
+              // Upload an image
+              const uploadResult = await cloudinary.uploader
+                .upload(
+                    req.file.path,
+                     { folder: 'kathas-blog', resource_type: 'auto' }
+                    )
+                .catch((error) => {
+                  next(handleError(500, error.message));
+                });
+        
+              featuredImage = uploadResult.secure_url;
+            }
+
+       
+        blog.featuredImage = featuredImage;
+        await blog.save();
+
+        res.status(200).json({
+            success: true,
+            message: 'Blog updated successfully',
+            blog
+        });
+
     } catch (error) {
         next(handleError(500,error.message))
     }
@@ -69,12 +105,15 @@ export const updateBlog = async (req, res, next) => {
 export const deleteBlog = async (req, res, next) => {
     try {
     const {blogid} = req.params;
-    await Blog.findByIdAndDelete(blogid);
+    const blog = await Blog.findByIdAndDelete(blogid);
+
+    if (!blog) {
+      return next(handleError(404, 'Blog not found.'));
+    }
 
     res.status(200).json({
         success: true,
-        message: 'Blog deleted successfully.',
-        blog
+        message: 'Blog deleted successfully.'
     })
   } catch (error) {
     next(handleError(500, error.message));
