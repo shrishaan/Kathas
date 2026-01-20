@@ -6,6 +6,7 @@ import mongoose, { get } from 'mongoose';
 import AuthRoute from './routes/Auth.route.js';
 import UserRoute from './routes/User.route.js';
 import CategoryRoute from './routes/Category.route.js';
+import BlogRoute from './routes/Blog.route.js';
 
 dotenv.config({ silent: true });
 
@@ -23,6 +24,7 @@ app.use(cors({
 app.use('/api/auth', AuthRoute);
 app.use('/api/user', UserRoute);
 app.use('/api/category', CategoryRoute);
+app.use('/api/blog', BlogRoute);
 
 mongoose.connect(process.env.MONGODB_CONN,{dbName: 'kathas-blog'}).then(() => console.log('Database connected successfully')).catch(err => console.log('Database connection failed', err));
 
