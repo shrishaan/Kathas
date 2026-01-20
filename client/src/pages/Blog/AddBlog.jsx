@@ -124,6 +124,7 @@ const AddBlog = () => {
   return (
     <Card className="pt-5 ">
       <CardContent>
+        <h1 className='text-2xl font-bold mb-4'>Add Blog</h1>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <div className="mb-3">

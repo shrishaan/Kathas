@@ -71,6 +71,7 @@ const EditBlog = () => {
 
   useEffect(() =>{
     if(blogData ){
+      setPreview(blogData.blog.featuredImage);
       form.setValue("category", blogData.blog.category._id);
       form.setValue("title", blogData.blog.title);
       form.setValue("slug", blogData.blog.slug);
@@ -95,17 +96,12 @@ const EditBlog = () => {
 
   async function onSubmit(values) {
     try {
-      const newValues = { ...values, author: user.user._id };
-      if(!file){
-        showToast("error", "Please select a featured image");
-        return;
-      }
           const formData = new FormData();
           formData.append("file", file);
-          formData.append("data", JSON.stringify(newValues));
+          formData.append("data", JSON.stringify(values));
 
-          const response = await fetch(`${getEnv("VITE_API_BASE_URL")}/blog/add`, {
-              method: "post",
+          const response = await fetch(`${getEnv("VITE_API_BASE_URL")}/blog/update/${blogid}`, {
+              method: "put",
               //multi part form data is by default in header
               credentials: "include", // to include cookies
               body: formData,
@@ -141,6 +137,7 @@ const EditBlog = () => {
   return (
     <Card className="pt-5 ">
       <CardContent>
+        <h1 className='text-2xl font-bold mb-4'>Edit Blog</h1>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <div className="mb-3">
