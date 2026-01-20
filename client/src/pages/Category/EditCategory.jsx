@@ -17,12 +17,13 @@ import slugify from 'slugify';
 import { showToast } from '@/helpers/showToast';
 import { getEnv } from '@/helpers/getEnv';
 import { useFetch } from '@/hooks/useFetch';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { RouteCategoryDetails } from '@/helpers/RouteName';
 
 const EditCategory = () => {
 
     const { category_id } = useParams();
-
+    const navigate = useNavigate();
     const {data: categoryData, loading, error} = useFetch(`${getEnv('VITE_API_BASE_URL')}/category/show/${category_id}`,{
         method: 'get',
         credentials: 'include'
@@ -75,6 +76,7 @@ const EditCategory = () => {
                 showToast('error', data.message );
                 return;
               }
+              navigate(RouteCategoryDetails);
               showToast('success', data.message );
             } catch (error) {
                       return showToast('error', error.message );

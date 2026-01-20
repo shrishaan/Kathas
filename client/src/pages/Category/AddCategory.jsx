@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from "react";
 import {
   Form,
   FormControl,
@@ -11,65 +11,66 @@ import { Input } from "@/components/ui/input";
 import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { Button } from '@/components/ui/Button';
-import { Card, CardContent } from '@/components/ui/card';
-import slugify from 'slugify';
-import { showToast } from '@/helpers/showToast';
-import { getEnv } from '@/helpers/getEnv';
-
+import { Button } from "@/components/ui/Button";
+import { Card, CardContent } from "@/components/ui/card";
+import slugify from "slugify";
+import { showToast } from "@/helpers/showToast";
+import { getEnv } from "@/helpers/getEnv";
+import { useNavigate } from "react-router-dom";
+import { RouteCategoryDetails } from "@/helpers/RouteName";
 
 const AddCategory = () => {
+  const navigate = useNavigate();
+  const formSchema = z.object({
+    name: z.string().min(3, "Name must be at least 3 characters long."),
+    slug: z.string().min(3, "Slug must be at least 3 characters long."),
+  });
 
-    const formSchema = z.object({
-            name: z.string().min(3,'Name must be at least 3 characters long.'),
-            slug: z.string().min(3,'Slug must be at least 3 characters long.'),
-           
-          });
-        
-          const form = useForm({
-            resolver: zodResolver(formSchema),
-            defaultValues: {
-              name:"",
-              slug: "",
-              
-            },
-          });
-          
-          const categoryName = form.watch("name");
-    
-          useEffect(() => {
-            if (categoryName) {
-              const slug = slugify(categoryName, { lower: true });
-              form.setValue("slug", slug);
-            }
-          }, [categoryName]);
+  const form = useForm({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: "",
+      slug: "",
+    },
+  });
 
-          async function onSubmit(values) {
-            try {
-              const response = await fetch(`${getEnv('VITE_API_BASE_URL')}/category/add`,{
-                method:'post',
-                headers: {'Content-Type':'application/json'},
-                body: JSON.stringify(values)
-              })
-    
-              const data = await response.json();
-    
-              if(!response.ok){
-                showToast('error', data.message );
-                return;
-              }
-              form.reset();
-              showToast('success', data.message );
-            } catch (error) {
-                      return showToast('error', error.message );
-    
-            }
-          }
-          
-    
+  const categoryName = form.watch("name");
+
+  useEffect(() => {
+    if (categoryName) {
+      const slug = slugify(categoryName, { lower: true });
+      form.setValue("slug", slug);
+    }
+  }, [categoryName]);
+
+  async function onSubmit(values) {
+    try {
+      const response = await fetch(
+        `${getEnv("VITE_API_BASE_URL")}/category/add`,
+        {
+          method: "post",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(values),
+        },
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        showToast("error", data.message);
+        return;
+      }
+      form.reset();
+      navigate(RouteCategoryDetails);
+      showToast("success", data.message);
+    } catch (error) {
+      return showToast("error", error.message);
+    }
+  }
+
   return (
-      <Card className="pt-5 max-w-screen-md mx-auto">
-        <CardContent>
+    <Card className="pt-5 max-w-screen-md mx-auto">
+      <CardContent>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <div className="mb-3">
@@ -80,10 +81,7 @@ const AddCategory = () => {
                   <FormItem>
                     <FormLabel>Name</FormLabel>
                     <FormControl>
-                      <Input
-                        placeholder="Enter your name"
-                        {...field}
-                      />
+                      <Input placeholder="Enter your name" {...field} />
                     </FormControl>
 
                     <FormMessage />
@@ -99,9 +97,7 @@ const AddCategory = () => {
                   <FormItem>
                     <FormLabel>Slug</FormLabel>
                     <FormControl>
-                      <Input
-                        placeholder="Slug"{...field}
-                      />
+                      <Input placeholder="Slug" {...field} />
                     </FormControl>
 
                     <FormMessage />
@@ -109,15 +105,15 @@ const AddCategory = () => {
                 )}
               />
             </div>
-        
-        <Button type="submit" className="w-full">Submit</Button>
+
+            <Button type="submit" className="w-full">
+              Submit
+            </Button>
           </form>
         </Form>
-
-        </CardContent>
-      </Card>
-
-  )
-}
+      </CardContent>
+    </Card>
+  );
+};
 
 export default AddCategory;
