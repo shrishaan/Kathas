@@ -35,7 +35,7 @@ const AddCategory = () => {
   });
 
   const categoryName = form.watch("name");
-
+sad
   useEffect(() => {
     if (categoryName) {
       const slug = slugify(categoryName, { lower: true });
