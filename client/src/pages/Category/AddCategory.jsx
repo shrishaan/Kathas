@@ -42,7 +42,7 @@ const AddCategory = () => {
       form.setValue("slug", slug);
     }
   }, [categoryName]);
-
+no
   async function onSubmit(values) {
     try {
       const response = await fetch(
