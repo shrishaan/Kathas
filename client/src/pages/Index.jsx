@@ -1,69 +1,24 @@
+import BlogCard from '@/components/ui/BlogCard';
+import Loading from '@/components/ui/Loading';
+import { getEnv } from '@/helpers/getEnv';
+import { useFetch } from '@/hooks/useFetch';
 import React from 'react'
 
 const Index = () => {
-  const gradientTextStyle = {
-    background: "linear-gradient(270deg, #ff3cac, #784ba0, #2b86c5, #ff3cac)",
-    backgroundSize: "800% 800%",
-    WebkitBackgroundClip: "text",
-    WebkitTextFillColor: "transparent",
-    animation: "gradientAnimation 5s ease infinite",
-    fontSize: "4rem",
-    fontWeight: "bold",
-    textAlign: "center",
-    marginBottom: "20px",
-  };
+  const { data: blogData, loading, error} = useFetch(`${getEnv("VITE_API_BASE_URL")}/blog/get-all`, {
+      method: "get",
+      credentials: "include",
+    });
 
-  const dotsStyle = {
-    display: "flex",
-    justifyContent: "center",
-    gap: "8px",
-  };
-
-  const dotStyle = {
-    width: "12px",
-    height: "12px",
-    borderRadius: "50%",
-    background: "#ff3cac",
-    animation: "pulse 1.2s infinite ease-in-out",
-  };
-
+  if(loading) return <Loading/>;
   return (
-     <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        width: "100%",
-        borderRadius: "8px",
-        height: "50vh",
-        background: "#1a1a1a",
-        overflow: "hidden",
-      }}
-    >
-      <h1 style={gradientTextStyle}>UNDER CONSTRUCTION</h1>
-
-      <div style={dotsStyle}>
-        <div style={{ ...dotStyle, animationDelay: "0s" }}></div>
-        <div style={{ ...dotStyle, animationDelay: "0.2s" }}></div>
-        <div style={{ ...dotStyle, animationDelay: "0.4s" }}></div>
-      </div>
-
-      {/* Keyframes */}
-      <style>
-        {`
-          @keyframes gradientAnimation {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-          }
-
-          @keyframes pulse {
-            0%, 80%, 100% { transform: scale(0); opacity: 0.3; }
-            40% { transform: scale(1); opacity: 1; }
-          }
-        `}
-      </style>
+    <div className='grid grid-cols-3 gap-10'>
+      {blogData && blogData.blog.length > 0 
+      ?
+      blogData.blog.map(blog => <BlogCard props={blog} />)
+      :
+      <div>Data Not Found.</div>
+    }
     </div>
   )
 }

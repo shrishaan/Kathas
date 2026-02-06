@@ -134,6 +134,7 @@ const EditBlog = () => {
   };
 
   if(blogLoading) return <Loading />;
+  
   return (
     <Card className="pt-5 ">
       <CardContent>
