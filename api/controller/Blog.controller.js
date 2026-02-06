@@ -131,3 +131,16 @@ export const getAllBlog = async (req, res, next) => {
         next(handleError(500,error.message))
     }
 }
+
+export const getBlog = async (req, res, next) => {
+    try {
+        const { slug } = req.params;
+        const blog = await Blog.findOne({slug}).populate("author", "name avatar role").populate("category", "name slug").lean().exec();
+        res.status(200).json({
+            success: true,
+            blog
+        })
+    } catch (error) {
+        next(handleError(500,error.message))
+    }
+}
