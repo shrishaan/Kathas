@@ -11,7 +11,10 @@ import { RouteBlogDetails } from "@/helpers/RouteName";
 const BlogCard = ({ props }) => {
   return (
     <Link to={RouteBlogDetails(props.category.slug, props.slug)}>
-      <Card className="pt-5">
+      <Card className="group relative overflow-hidden rounded-2xl border border-gray-200 bg-white
+             transition-all duration-300 ease-in-out
+             hover:shadow-xl hover:-translate-y-1
+             hover:border-blue-500/60 pt-5">
         <CardContent>
           <div className="flex items-center justify-between">
             <div className="flex justify-between items-center gap-2">
