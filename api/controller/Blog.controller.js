@@ -122,7 +122,7 @@ export const deleteBlog = async (req, res, next) => {
 
 export const getAllBlog = async (req, res, next) => {
     try {
-        const blog = await Blog.find().populate("author", "name avatar role").populate("category", "name").sort({ createdAt : -1 }).lean().exec();
+        const blog = await Blog.find().populate("author", "name avatar role").populate("category", "name slug").sort({ createdAt : -1 }).lean().exec();
         res.status(200).json({
             success: true,
             blog
