@@ -30,7 +30,7 @@ const BlogCard = ({ props }) => {
             )}
           </div>
           {/* Featured Image */}
-          <div className="my-2">
+          <div className="my-2 w-full aspect-square bg-gray-100 rounded-lg overflow-hidden flex items-center justify-center">
             <img
               src={props.featuredImage}
               alt="Featured Image"

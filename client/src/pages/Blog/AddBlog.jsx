@@ -29,16 +29,20 @@ import Editor from "@/components/ui/Editor";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RouteBlog } from "@/helpers/RouteName";
+import { IoCloudUploadOutline } from "react-icons/io5";
 
 const AddBlog = () => {
-
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
 
   const [filePreview, setPreview] = useState();
   const [file, setFile] = useState();
 
-  const {data: categoryData,loading,error,} = useFetch(`${getEnv("VITE_API_BASE_URL")}/category/all-category`, {
+  const {
+    data: categoryData,
+    loading,
+    error,
+  } = useFetch(`${getEnv("VITE_API_BASE_URL")}/category/all-category`, {
     method: "get",
     credentials: "include",
   });
@@ -65,8 +69,7 @@ const AddBlog = () => {
   const handleEditorData = (event, editor) => {
     const data = editor.getData();
     form.setValue("blogContent", data);
-    
-  }
+  };
 
   const blogTitle = form.watch("title");
 
@@ -80,38 +83,35 @@ const AddBlog = () => {
   async function onSubmit(values) {
     try {
       const newValues = { ...values, author: user.user._id };
-      if(!file){
+      if (!file) {
         showToast("error", "Please select a featured image");
         return;
       }
-          const formData = new FormData();
-          formData.append("file", file);
-          formData.append("data", JSON.stringify(newValues));
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("data", JSON.stringify(newValues));
 
-          const response = await fetch(`${getEnv("VITE_API_BASE_URL")}/blog/add`, {
-              method: "post",
-              //multi part form data is by default in header
-              credentials: "include", // to include cookies
-              body: formData,
-            }
-            
-          ); 
-    
-          const data = await response.json();
-    
-          if (!response.ok) {
-            showToast("error", data.message);
-            return;
-          }
-          form.reset();
-          setFile();
-          setPreview();   
-          navigate(RouteBlog);
-          showToast("success", data.message);
+      const response = await fetch(`${getEnv("VITE_API_BASE_URL")}/blog/add`, {
+        method: "post",
+        //multi part form data is by default in header
+        credentials: "include", // to include cookies
+        body: formData,
+      });
 
-        } catch (error) {
-          return showToast("error", error.message);
-        }
+      const data = await response.json();
+
+      if (!response.ok) {
+        showToast("error", data.message);
+        return;
+      }
+      form.reset();
+      setFile();
+      setPreview();
+      navigate(RouteBlog);
+      showToast("success", data.message);
+    } catch (error) {
+      return showToast("error", error.message);
+    }
   }
 
   const handleFileSelection = (files) => {
@@ -124,7 +124,7 @@ const AddBlog = () => {
   return (
     <Card className="pt-5 ">
       <CardContent>
-        <h1 className='text-2xl font-bold mb-4'>Add Blog</h1>
+        <h1 className="text-2xl font-bold mb-4">Add Blog</h1>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <div className="mb-3">
@@ -135,7 +135,10 @@ const AddBlog = () => {
                   <FormItem>
                     <FormLabel>Category</FormLabel>
                     <FormControl>
-                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
                         <SelectTrigger>
                           <SelectValue placeholder="Select a category" />
                         </SelectTrigger>
@@ -143,7 +146,12 @@ const AddBlog = () => {
                           {categoryData &&
                             categoryData?.category?.length > 0 &&
                             categoryData.category.map((category) => (
-                              <SelectItem key={category._id} value={category._id}> {category.name}
+                              <SelectItem
+                                key={category._id}
+                                value={category._id}
+                              >
+                                {" "}
+                                {category.name}
                               </SelectItem>
                             ))}
                         </SelectContent>
@@ -191,12 +199,23 @@ const AddBlog = () => {
 
             <div className="mb-3">
               <span className="block mb-2">Featured Image</span>
-              <Dropzone onDrop={(acceptedFiles) => handleFileSelection(acceptedFiles)} >
+              <Dropzone
+                onDrop={(acceptedFiles) => handleFileSelection(acceptedFiles)}
+              >
                 {({ getRootProps, getInputProps }) => (
                   <div {...getRootProps()}>
                     <input {...getInputProps()} />
-                    <div className="flex justify-center items-center border-2 w-36 h-28 border-dashed rounded cursor-pointer">
-                      <img src={filePreview} alt="" />
+                    <div className="w-36 h-28 bg-white">
+                      <div className="group relative w-full h-full flex justify-center items-center border-2 border-dashed rounded cursor-pointer overflow-hidden">
+                        <img
+                          src={filePreview}
+                          alt=""
+                          className="w-full h-full object-cover rounded"
+                        />
+                        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                          <IoCloudUploadOutline className="text-white text-3xl" />
+                        </div>
+                      </div>
                     </div>
                   </div>
                 )}
@@ -211,14 +230,15 @@ const AddBlog = () => {
                   <FormItem>
                     <FormLabel>Blog Content</FormLabel>
                     <FormControl>
-                      <Editor props={{ initialData: '', onChange: handleEditorData }}/>
+                      <Editor
+                        props={{ initialData: "", onChange: handleEditorData }}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              
-            </div>    
+            </div>
 
             <Button type="submit" className="w-full">
               Submit
