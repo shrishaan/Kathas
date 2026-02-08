@@ -23,9 +23,9 @@ import Loading from "@/components/ui/Loading";
 import { IoCameraOutline } from "react-icons/io5";
 import Dropzone from "react-dropzone";
 import { setUser } from "@/redux/user/user.slice";
+import { Info } from "lucide-react";
 
 const Profile = () => {
-
   const [filePreview, setPreview] = useState();
   const [file, setFile] = useState();
 
@@ -40,14 +40,14 @@ const Profile = () => {
     {
       method: "get",
       credentials: "include",
-    }
+    },
   );
 
   const dispatch = useDispatch();
 
   const formSchema = z.object({
     name: z.string().min(3, "Name must be at least 3 characters long"),
-    email: z.string().email(),
+    // email: z.string().email(),
     bio: z.string().min(4, "Bio must be at least 4 characters long"),
   });
 
@@ -84,7 +84,7 @@ const Profile = () => {
           //multi part form data is by default in header
           credentials: "include", // to include cookies
           body: formData,
-        }
+        },
       );
 
       const data = await response.json();
@@ -151,25 +151,36 @@ const Profile = () => {
                   )}
                 />
               </div>
+
               <div className="mb-3">
                 <FormField
                   control={form.control}
                   name="email"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Email</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="Enter your email address"
-                          {...field}
-                        />
-                      </FormControl>
+                      <div className="flex items-center gap-2">
+                        <FormLabel>Email</FormLabel>
 
-                      <FormMessage />
+                        <span className="group relative cursor-pointer">
+                          <Info className="w-4 h-4 text-gray-400" />
+                          <span className="absolute left-1/2 -translate-x-1/2 top-6 w-max bg-black text-white text-xs rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity z-50 whitespace-nowrap">
+                            Email cannot be changed.
+                          </span>
+                        </span>
+                      </div>
+
+                      {/* Visible email display */}
+                      <div className="h-10 px-3 flex items-center rounded-md border bg-gray-100 text-sm">
+                        {field.value}
+                      </div>
+
+                      {/* Hidden input so form still submits email */}
+                      <input type="hidden" {...field} />
                     </FormItem>
                   )}
                 />
               </div>
+
               <div className="mb-3">
                 <FormField
                   control={form.control}
