@@ -27,7 +27,7 @@ export const updateUser = async (req, res, next) => {
 
     const user = await User.findById(userid);
     user.name = data.name;
-    user.email = data.email;
+    // user.email = data.email;
     user.bio = data.bio;
 
     if (data.password && data.password.length >= 8) {
