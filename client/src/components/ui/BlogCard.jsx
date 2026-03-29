@@ -14,8 +14,8 @@ const BlogCard = ({ props }) => {
       <Card className="group relative overflow-hidden rounded-2xl border border-gray-200 bg-white
              transition-all duration-300 ease-in-out
              hover:shadow-xl hover:-translate-y-1
-             hover:border-blue-500/60 pt-5">
-        <CardContent>
+             hover:border-blue-500/60 pt-5 h-[450px] flex flex-col">
+        <CardContent className="flex flex-col h-full justify-between">
           <div className="flex items-center justify-between">
             <div className="flex justify-between items-center gap-2">
               <Avatar>
@@ -34,7 +34,7 @@ const BlogCard = ({ props }) => {
             <img
               src={props.featuredImage}
               alt="Featured Image"
-              className="rounded"
+              className="rounded w-full h-full object-cover"
             />
           </div>
           {/* Title & Date  */}

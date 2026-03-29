@@ -1,4 +1,6 @@
 import { Avatar, AvatarImage } from '@/components/ui/avatar';
+import Comment from '@/components/ui/Comment';
+import CommentList from '@/components/ui/CommentList';
 import Loading from '@/components/ui/Loading';
 import { getEnv } from '@/helpers/getEnv';
 import { useFetch } from '@/hooks/useFetch';
@@ -35,6 +37,14 @@ const SingleBlogDetails = () => {
                     </div>
                     <div dangerouslySetInnerHTML={{__html: decode(data.blog.blogContent) || "" }}>
                     {/* passing emty string to avoid error when blogContent is null or undefined */}
+                    </div>
+
+                    <div className='border-t mt-5 pt-5'>
+                        <Comment props={{ blogid: data.blog._id }} />
+                    </div>
+
+                    <div className='border-t mt-5 pt-5'>
+                        <CommentList props={{ blogid: data.blog._id }} />
                     </div>
                 </div>
                

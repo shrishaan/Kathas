@@ -17,10 +17,13 @@ import slugify from "slugify";
 import { showToast } from "@/helpers/showToast";
 import { getEnv } from "@/helpers/getEnv";
 import { useNavigate } from "react-router-dom";
-import { RouteCategoryDetails } from "@/helpers/RouteName";
+import { RouteCategoryDetails, RouteSignIn } from "@/helpers/RouteName";
+import { useSelector } from "react-redux";
 
 const AddCategory = () => {
+  const user = useSelector((state) => state.user);
   const navigate = useNavigate();
+
   const formSchema = z.object({
     name: z.string().min(3, "Name must be at least 3 characters long."),
     slug: z.string().min(3, "Slug must be at least 3 characters long."),
@@ -44,12 +47,19 @@ const AddCategory = () => {
   }, [categoryName]);
 
   async function onSubmit(values) {
+    if (user.user._id === null) {
+      showToast("error", "You must be logged in to add a category.");
+      navigate(RouteSignIn);
+      return;
+    }
+
     try {
       const response = await fetch(
         `${getEnv("VITE_API_BASE_URL")}/category/add`,
         {
           method: "post",
           headers: { "Content-Type": "application/json" },
+          credentials: "include",
           body: JSON.stringify(values),
         },
       );
