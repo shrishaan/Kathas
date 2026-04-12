@@ -3,9 +3,9 @@ import Comment from "../models/comment.model.js";
 
 export const addcomment = async (req, res, next) => {
   try {
-    const {author, blogid, comment} = req.body;
+    const {user, blogid, comment} = req.body;
     const newComment = new Comment({
-        author: author,
+        user: user,
         blogid: blogid,
         comment: comment
     })
@@ -25,7 +25,7 @@ export const addcomment = async (req, res, next) => {
 export const getComments = async (req, res, next) => {
   try {
     const { blogid } = req.params;
-    const comments = await Comment.find({ blogid:blogid }).populate('author', 'name avatar').sort({ createdAt: -1 }).lean().exec();
+    const comments = await Comment.find({ blogid:blogid }).populate('user', 'name avatar').sort({ createdAt: -1 }).lean().exec();
     res.status(200).json({
         comments: comments
     });
@@ -34,3 +34,16 @@ export const getComments = async (req, res, next) => {
     next(handleError(500, error.message));
   }
 };
+
+export const commentCount = async (req, res, next) => {
+  try {
+    const { blogid } = req.params;
+    const commentCount = await Comment.countDocuments({ blogid:blogid });
+    res.status(200).json({
+        commentCount
+    }); 
+  } catch (error) {
+    next(handleError(500, error.message));
+  }
+};
+
