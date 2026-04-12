@@ -1,10 +1,12 @@
 import express from "express";
-import { addcomment, commentCount, getComments } from "../controller/Comment.controller.js";
+import { addcomment, commentCount, deleteComment, getAllComments, getComments } from "../controller/Comment.controller.js";
 
 const CommentRoute = express.Router();
 
 CommentRoute.post("/add", addcomment);
 CommentRoute.get("/get/:blogid", getComments);
 CommentRoute.get("/get-count/:blogid", commentCount);
+CommentRoute.get("/get-all-comment", getAllComments);
+CommentRoute.delete("/delete/:commentid", deleteComment);
 
 export default CommentRoute;

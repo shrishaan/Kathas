@@ -76,7 +76,7 @@ const Comment = ({ props }) => {
                 name="comment"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Comment</FormLabel>
+                    <FormLabel></FormLabel>
                     <FormControl>
                       <Textarea
                         placeholder="Type your comment here..."

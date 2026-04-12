@@ -10,16 +10,16 @@ import { useParams } from "react-router-dom";
 import moment from "moment";
 import CommentCount from "@/components/ui/CommentCount";
 import LikeCount from "@/components/ui/LikeCount";
+import RelatedBlog from "@/components/ui/RelatedBlog";
 
 const SingleBlogDetails = () => {
-  const { blog } = useParams();
+  const { blog, category } = useParams();
   const { data, loading, error } = useFetch(
     `${getEnv("VITE_API_BASE_URL")}/blog/get-blog/${blog}`,
     {
       method: "get",
       credentials: "include",
-    },
-  );
+    }, [blog, category]);
 
   if (loading) return <Loading />;
 
@@ -69,7 +69,9 @@ const SingleBlogDetails = () => {
           </div>
         </>
       )}
-      <div className="border rounded w-[30%]"> </div>
+      <div className="border rounded w-[30%] p-5"> 
+        <RelatedBlog props={{ category: category, currentBlog: blog }} />
+      </div>
     </div>
   );
 };

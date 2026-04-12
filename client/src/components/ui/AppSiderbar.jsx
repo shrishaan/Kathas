@@ -19,16 +19,16 @@ import { GrBlog } from "react-icons/gr";
 import { FaRegComments } from "react-icons/fa";
 import { LuUsers } from "react-icons/lu";
 import { GoDot } from "react-icons/go";
-import { RouteBlog, RouteCategoryDetails } from "@/helpers/RouteName";
+import { RouteBlog, RouteBlogByCategory, RouteCategoryDetails, RouteCommentDetails, RouteUser } from "@/helpers/RouteName";
 import { useFetch } from "@/hooks/useFetch";
 import { getEnv } from "@/helpers/getEnv";
 
-const AppSiderbar = () => {
+const AppSiderbar = ({ refresh }) => {
 
   const { data: categoryData} = useFetch(`${getEnv("VITE_API_BASE_URL")}/category/all-category`, {
       method: "get",
       credentials: "include",
-    });
+    }, [refresh]);
 
   return (
     <Sidebar>
@@ -68,7 +68,7 @@ const AppSiderbar = () => {
 
             <SidebarMenuItem>
               <SidebarMenuButton asChild>
-                <Link to="">
+                <Link to={RouteCommentDetails}>
                   <FaRegComments />
                   Comments
                 </Link>
@@ -77,7 +77,7 @@ const AppSiderbar = () => {
 
             <SidebarMenuItem>
               <SidebarMenuButton asChild>
-                <Link to="">
+                <Link to={RouteUser}>
                   <LuUsers />
                   Users
                 </Link>
@@ -93,7 +93,7 @@ const AppSiderbar = () => {
             {categoryData && categoryData.category.length > 0 && categoryData.category.map(category => 
                <SidebarMenuItem key={category._id}>
               <SidebarMenuButton asChild>
-                <Link to="">
+                <Link to={RouteBlogByCategory(category.slug)}>
                   <GoDot />
                   {category.name}
                 </Link>

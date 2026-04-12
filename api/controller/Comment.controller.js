@@ -47,3 +47,28 @@ export const commentCount = async (req, res, next) => {
   }
 };
 
+export const getAllComments = async (req, res, next) => {
+  try {
+    
+    const comments = await Comment.find().populate('blogid','title').populate('user','name');
+    res.status(200).json({
+        comments
+    }); 
+  } catch (error) {
+    next(handleError(500, error.message));
+  }
+};
+
+export const deleteComment = async (req, res, next) => {
+  try {
+    const { commentid } = req.params;
+    await Comment.findByIdAndDelete(commentid);
+    res.status(200).json({
+        success: true,
+        message: 'Comment deleted successfully.'
+    }); 
+  } catch (error) {
+    next(handleError(500, error.message));
+  }
+};
+

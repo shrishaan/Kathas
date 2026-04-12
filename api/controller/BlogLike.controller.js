@@ -16,7 +16,7 @@ export const doLike = async (req, res, next) => {
         like = null;
     }
 
-    const likecount = await BlogLike.countDocuments({ blogid});
+    const likeCount = await BlogLike.countDocuments({ blogid});
     res.status(200).json({
         success: true,
         message: like ? 'Blog liked successfully.' : 'Blog unliked successfully.',
@@ -31,7 +31,7 @@ export const doLike = async (req, res, next) => {
 export const likeCount = async (req, res, next) => {
   try {
     const { blogid, userid } = req.params;
-    const likecount = await BlogLike.countDocuments({ blogid});
+    const likeCount = await BlogLike.countDocuments({ blogid});
     let isUserliked = false;
     if(userid){
         const getuserlike = await BlogLike.countDocuments({ blogid, user: userid });
@@ -48,6 +48,7 @@ export const likeCount = async (req, res, next) => {
         isUserliked
     });
   } catch (error) {
+    console.log("LIKE COUNT ERROR:", error);
     next(handleError(500, error.message));
   }
 };
