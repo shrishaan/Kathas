@@ -6,8 +6,7 @@ import usericon from "@/assets/images/user.png";
 import moment from "moment";
 
 const CommentList = ({ blogid, refresh }) => {
-  const { data, loading, error } = useFetch(
-    `${getEnv("VITE_API_BASE_URL")}/comment/get/${blogid}`,
+  const { data, loading, error } = useFetch(`${getEnv("VITE_API_BASE_URL")}/comment/get/${blogid}`,
     {
       method: "get",
       credentials: "include",
@@ -38,11 +37,11 @@ const CommentList = ({ blogid, refresh }) => {
             return (
               <div key={comment._id} className="flex gap-2 pb-4 mb-4 border-b border-gray-300">
                 <Avatar>
-                  <AvatarImage src={comment?.author.avatar || usericon} />
+                  <AvatarImage src={comment?.user.avatar || usericon} />
                 </Avatar>
 
                 <div className="items-center">
-                  <p className="font-bold">{comment?.author.name}</p>
+                  <p className="font-bold">{comment?.user.name}</p>
                   <span className="text-sm text-gray-500">{moment(comment?.createdAt).format("MMMM Do, YYYY")}</span>
                   <div className="mt-1">{comment?.comment}</div>
                 </div>

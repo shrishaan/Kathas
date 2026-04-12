@@ -53,7 +53,7 @@ const AddBlog = () => {
     slug: z.string().min(3, "Slug must be at least 3 characters long."),
     blogContent: z
       .string()
-      .min(3, "Blog content must be at least 3 characters long."),
+      .min(0, "Blog content must be at least 3 characters long."),
   });
 
   const form = useForm({
@@ -93,8 +93,7 @@ const AddBlog = () => {
 
       const response = await fetch(`${getEnv("VITE_API_BASE_URL")}/blog/add`, {
         method: "post",
-        //multi part form data is by default in header
-        credentials: "include", // to include cookies
+        credentials: "include", 
         body: formData,
       });
 

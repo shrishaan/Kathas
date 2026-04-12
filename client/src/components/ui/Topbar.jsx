@@ -89,7 +89,7 @@ const Topbar = () => {
         focus:ring-4 focus:ring-blue-600
       " >
                 <AvatarImage
-                  src={user.user?.avatar || usericon}
+                  src={user?.user?.avatar ? user.user.avatar : usericon}
                   referrerPolicy="no-referrer"
                   onError={(e) => {
                     e.currentTarget.onerror = null;
@@ -103,8 +103,8 @@ const Topbar = () => {
             </DropdownMenuTrigger>
             <DropdownMenuContent>
               <DropdownMenuLabel>
-                <p>{user.user.name}</p>
-                <p className="text-sm">{user.user.email}</p>
+                <p>{user?.user?.name}</p>
+                <p className="text-sm">{user?.user?.email}</p>
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem asChild className="cursor-pointer">
