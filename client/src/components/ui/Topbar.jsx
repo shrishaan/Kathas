@@ -79,7 +79,7 @@ const Topbar = () => {
                 </button>
                 <Link to={RouteIndex}>
                   <img src={logo} onClick={() => navigate(RouteIndex)} className="md:w-auto md:h-auto cursor-pointer"
-  style={{ height: '48px', width: 'auto' }} />
+  style={{ height: '30px', width: 'auto' }} />
                 </Link>
       </div>
                                                                           
