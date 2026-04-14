@@ -78,7 +78,7 @@ const Topbar = () => {
                     <BsListUl size={27}/>
                 </button>
                 <Link to={RouteIndex}>
-                  <img src={logo} onClick={() => navigate(RouteIndex)} className="md:w-auto w-48 cursor-pointer" />
+                  <img src={logo} onClick={() => navigate(RouteIndex)} className="h-10 md:h-12 w-auto cursor-pointer" />
                 </Link>
       </div>
                                                                           

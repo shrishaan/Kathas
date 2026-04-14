@@ -28,7 +28,7 @@ import Dropzone from "react-dropzone";
 import Editor from "@/components/ui/Editor";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { RouteBlog } from "@/helpers/RouteName";
+import { RouteBlog, RouteIndex } from "@/helpers/RouteName";
 import { IoCloudUploadOutline } from "react-icons/io5";
 
 const AddBlog = () => {
@@ -106,7 +106,7 @@ const AddBlog = () => {
       form.reset();
       setFile();
       setPreview();
-      navigate(RouteBlog);
+      navigate(RouteIndex);
       showToast("success", data.message);
     } catch (error) {
       return showToast("error", error.message);
