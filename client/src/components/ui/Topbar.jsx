@@ -71,18 +71,18 @@ const Topbar = () => {
   }
 
   return (
-    <div className="flex justify-between items-center h-16 fixed w-full z-20 bg-white px-5 border-b">
+    <div className="flex justify-between items-center h-16 md:h-16 h-14 fixed w-full z-20 bg-white px-3 md:px-5 border-b">
 
        <div className='flex justify-center items-center gap-2'>
                 <button onClick={toggleSidebar} className='md:hidden' type='button'>
                     <BsListUl size={27}/>
                 </button>
                 <Link to={RouteIndex}>
-                  <img src={logo} onClick={() => navigate(RouteIndex)} className="md:w-auto w-48 cursor-pointer" />
+                  <img src={logo} onClick={() => navigate(RouteIndex)} className="className=h-8 md:h-auto w-auto cursor-pointer" />
                 </Link>
       </div>
                                                                           
-      <div className="w-[500px]">
+      <div className="w-full md:w-[500px]">
         <div className={`md:relative md:block absolute bg-white left-0 w-full md:top-0 top-16 md:p-0 p-5 ${showSearch ? 'block' : 'hidden'}`}>
         <SearchBox />
         </div>
