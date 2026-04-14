@@ -30,7 +30,7 @@ import { showToast } from "@/helpers/showToast";
 import { getEnv } from "@/helpers/getEnv";
 import { FaSearch } from "react-icons/fa";
 import { BsListUl } from "react-icons/bs";
-import { useSidebar } from '../ui/sidebar';
+import { useSidebar } from './Sidebar';
 
 const Topbar = () => {
   const { toggleSidebar } = useSidebar();

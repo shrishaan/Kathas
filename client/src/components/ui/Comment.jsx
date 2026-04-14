@@ -15,7 +15,7 @@ import { getEnv } from "@/helpers/getEnv";
 import { showToast } from "@/helpers/showToast";
 import { Link, Navigate } from "react-router-dom";
 import { Button } from "@/components/ui/Button";
-import { Textarea } from "./textarea";
+import { Textarea } from "./Textarea";
 import { useSelector } from "react-redux";
 import { RouteCategoryDetails, RouteSignIn } from "@/helpers/RouteName";
 import CommentList from "./CommentList";

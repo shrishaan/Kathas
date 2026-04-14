@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Input } from './input';
+import { Input } from './Input';
 import { useNavigate } from 'react-router-dom';
 import { RouteSearch } from '@/helpers/RouteName';
 
