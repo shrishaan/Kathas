@@ -1,4 +1,4 @@
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarImage } from "@/components/ui/Avatar";
 import Comment from "@/components/ui/Comment";
 import CommentList from "@/components/ui/CommentList";
 import Loading from "@/components/ui/Loading";

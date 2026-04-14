@@ -1,7 +1,7 @@
 import { getEnv } from "@/helpers/getEnv";
 import { useFetch } from "@/hooks/useFetch";
 import React from "react";
-import { Avatar, AvatarImage } from "./avatar";
+import { Avatar, AvatarImage } from "./Avatar";
 import usericon from "@/assets/images/user.png";
 import moment from "moment";
 

@@ -1,5 +1,5 @@
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
-import { Card, CardContent } from "@/components/ui/card";
+import { Avatar, AvatarImage } from "@/components/ui/Avatar";
+import { Card, CardContent } from "@/components/ui/Card";
 import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/Button";
 import {
@@ -9,15 +9,15 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+} from "@/components/ui/Form";
+import { Input } from "@/components/ui/Input";
 import z from "zod";
 import { getEnv } from "@/helpers/getEnv";
 import { showToast } from "@/helpers/showToast";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Textarea } from "@/components/ui/textarea";
+import { Textarea } from "@/components/ui/Textarea";
 import { useFetch } from "@/hooks/useFetch";
 import Loading from "@/components/ui/Loading";
 import { IoCameraOutline } from "react-icons/io5";

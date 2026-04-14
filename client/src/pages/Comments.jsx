@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/Button";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/Card";
 import { RouteCommentDetails } from "@/helpers/RouteName";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
@@ -10,7 +10,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from "@/components/ui/Table";
 import { getEnv } from "@/helpers/getEnv";
 import Loading from "@/components/ui/Loading";
 import { useFetch } from "@/hooks/useFetch";

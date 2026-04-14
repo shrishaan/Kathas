@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Button } from "@/components/ui/Button";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/Card";
 import { Link } from "react-router-dom";
 import {
   Table,
@@ -10,7 +10,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from "@/components/ui/Table";
 import { RouteBlogAdd, RouteBlogEdit } from '@/helpers/RouteName';
 import { useFetch } from '@/hooks/useFetch';
 import { getEnv } from '@/helpers/getEnv';

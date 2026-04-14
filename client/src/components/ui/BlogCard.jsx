@@ -1,7 +1,7 @@
 import React from "react";
-import { Card, CardContent } from "./card";
-import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarImage } from "./avatar";
+import { Card, CardContent } from "./Card";
+import { Badge } from "@/components/ui/Badge";
+import { Avatar, AvatarImage } from "./Avatar";
 import { FaRegCalendarDays } from "react-icons/fa6";
 import usericon from "@/assets/images/user.png";
 import moment from "moment";
