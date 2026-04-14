@@ -73,19 +73,15 @@ const Topbar = () => {
   return (
     <div className="flex justify-between items-center h-16 fixed w-full z-20 bg-white px-5 border-b">
 
-      <div className='flex justify-center items-center gap-2'>
-  <button onClick={toggleSidebar} className='md:hidden' type='button'>
-    <BsListUl size={27}/>
-  </button>
-  <Link to={RouteIndex} className="flex items-center">
-    <img 
-      src={logo} 
-      onClick={() => navigate(RouteIndex)} 
-      className="md:w-auto md:h-auto cursor-pointer"
-      style={{ height: '48px', width: 'auto' }}
-    />
-  </Link>
-</div>
+       <div className='flex justify-center items-center gap-2'>
+                <button onClick={toggleSidebar} className='md:hidden' type='button'>
+                    <BsListUl size={27}/>
+                </button>
+                <Link to={RouteIndex}>
+                  <img src={logo} onClick={() => navigate(RouteIndex)} className="md:w-auto md:h-auto cursor-pointer"
+  style={{ height: '48px', width: 'auto' }} />
+                </Link>
+      </div>
                                                                           
       <div className="w-[500px]">
         <div className={`md:relative md:block absolute bg-white left-0 w-full md:top-0 top-16 md:p-0 p-5 ${showSearch ? 'block' : 'hidden'}`}>
