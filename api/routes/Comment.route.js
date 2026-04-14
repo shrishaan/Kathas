@@ -1,9 +1,11 @@
 import express from "express";
 import { addcomment, commentCount, deleteComment, getAllComments, getComments } from "../controller/Comment.controller.js";
+import { authenticate } from "../middleware/authenticate.js";
+import { onlyadmin } from "../middleware/onlyadmin.js";
 
 const CommentRoute = express.Router();
 
-CommentRoute.post("/add", addcomment);
+CommentRoute.post("/add",  addcomment);
 CommentRoute.get("/get/:blogid", getComments);
 CommentRoute.get("/get-count/:blogid", commentCount);
 CommentRoute.get("/get-all-comment", getAllComments);

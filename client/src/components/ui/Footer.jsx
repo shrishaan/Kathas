@@ -11,14 +11,6 @@ const Footer = () => {
       >
         {" "}
         Shrishaan Bajrachara
-      </a>{" "}
-      &{" "}
-      <a
-        href="https://github.com/TrucKKun0"
-        target="_blank"
-        className="font-bold"
-      >
-        Bishwodip Rai
       </a>
     </div>
   );

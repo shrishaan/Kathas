@@ -1,6 +1,7 @@
 import express from "express";
 import { deleteUser, getAllUser, getUser, updateUser } from "../controller/User.controller.js";
 import upload from "../config/multer.js";
+import { authenticate } from "../middleware/authenticate.js";
 
 const UserRoute = express.Router();
 

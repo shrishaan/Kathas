@@ -19,12 +19,13 @@ import { GrBlog } from "react-icons/gr";
 import { FaRegComments } from "react-icons/fa";
 import { LuUsers } from "react-icons/lu";
 import { GoDot } from "react-icons/go";
-import { RouteBlog, RouteBlogByCategory, RouteCategoryDetails, RouteCommentDetails, RouteUser } from "@/helpers/RouteName";
+import { RouteBlog, RouteBlogByCategory, RouteCategoryDetails, RouteCommentDetails, RouteIndex, RouteUser } from "@/helpers/RouteName";
 import { useFetch } from "@/hooks/useFetch";
 import { getEnv } from "@/helpers/getEnv";
+import { useSelector } from "react-redux";
 
 const AppSiderbar = ({ refresh }) => {
-
+  const user = useSelector( state => state.user );
   const { data: categoryData} = useFetch(`${getEnv("VITE_API_BASE_URL")}/category/all-category`, {
       method: "get",
       credentials: "include",
@@ -41,23 +42,18 @@ const AppSiderbar = ({ refresh }) => {
           <SidebarMenu>
             <SidebarMenuItem>
               <SidebarMenuButton asChild>
-                <Link to="">
+                <Link to={RouteIndex}>
                   <IoHomeOutline />
                   Home
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
 
-            <SidebarMenuItem>
-              <SidebarMenuButton asChild>
-                <Link to={RouteCategoryDetails}>
-                  <BiCategoryAlt />
-                  Categories
-                </Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
 
-            <SidebarMenuItem>
+      {user && user.isLoggedIn 
+      ?
+      <>
+      <SidebarMenuItem>
               <SidebarMenuButton asChild>
                 <Link to={RouteBlog}>
                   <GrBlog />
@@ -74,6 +70,25 @@ const AppSiderbar = ({ refresh }) => {
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
+      </>
+      :
+        <></>
+      }
+      
+      
+      {user && user.isLoggedIn && user.user.role === 'admin'
+      ?
+      <>
+      <SidebarMenuItem>
+              <SidebarMenuButton asChild>
+                <Link to={RouteCategoryDetails}>
+                  <BiCategoryAlt />
+                  Categories
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+
+            
 
             <SidebarMenuItem>
               <SidebarMenuButton asChild>
@@ -83,6 +98,13 @@ const AppSiderbar = ({ refresh }) => {
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
+      </>
+      :
+        <></>
+      }
+
+            
+
           </SidebarMenu>
         </SidebarGroup>
 

@@ -18,20 +18,23 @@ const RelatedBlog = ({ props,refresh }) => {
 
   return (
     <div>
-        <h2 className='text-2xl font-bold mb-4'>Related Blogs</h2>
+        <h2 className="text-2xl font-bold mb-5 relative inline-block">Related Blogs
+          <span className="absolute left-0 -bottom-1 h-[3px] w-1/2 bg-gradient-to-r from-blue-700 to-blue-400 rounded-full"></span>
+        </h2>
         <div>
             {data && data.relatedBlog.length > 0
             ?
             data.relatedBlog.map(blog => {
                 return (
                     <Link key={blog._id} to={RouteBlogDetails(props.category, blog.slug)} >
-                    <div  div className='flex items-center gap-2 mb-3'>
-                        <img className='w-[100px] h-[70px] object-cover rounded-md' src={blog.featuredImage} />
-                        <h4 className='line-clamp-2 text-lg font-semibold'>{blog.title}</h4>
-                    </div>   
+                      <div className='flex items-center gap-2 mb-2 hover:bg-gray-100 p-2 rounded-lg transition'>
+                        <div className="w-[90px] aspect-[4/3] overflow-hidden rounded-lg flex-shrink-0">
+                          <img src={blog.featuredImage} className="w-full h-full object-cover opacity-100"/>
+                        </div>
+                        <h4 className='line-clamp-2 text-sm font-semibold'>{blog.title}</h4>
+                      </div>
                     </Link>    
 
-                    
                 )
             })
             :

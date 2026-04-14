@@ -24,10 +24,10 @@ const SingleBlogDetails = () => {
   if (loading) return <Loading />;
 
   return (
-    <div className="flex justify-between gap-20">
+    <div className="md:flex-nowrap flex-wrap flex justify-between gap-20">
       {data && data.blog && (
         <>
-          <div className="border rounded w-[70%] p-5">
+          <div className="border rounded  md:w-[70%] w-full p-5">
             <h1 className="text-2xl font-bold p-2 mb-1">{data.blog.title}</h1>
             <div className="flex justify-between items-center">
               <div className="flex justify-between items-center gap-5">
@@ -69,7 +69,7 @@ const SingleBlogDetails = () => {
           </div>
         </>
       )}
-      <div className="border rounded w-[30%] p-5"> 
+      <div className="border rounded md:w-[30%] w-full p-5"> 
         <RelatedBlog props={{ category: category, currentBlog: blog }} />
       </div>
     </div>

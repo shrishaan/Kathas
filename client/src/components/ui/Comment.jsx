@@ -41,6 +41,7 @@ const Comment = ({ props }) => {
       const response = await fetch(`${getEnv("VITE_API_BASE_URL")}/comment/add`,
         {
           method: "post",
+          credentials: "include",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(newValues),
         },

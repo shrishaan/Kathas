@@ -49,8 +49,18 @@ export const commentCount = async (req, res, next) => {
 
 export const getAllComments = async (req, res, next) => {
   try {
-    
-    const comments = await Comment.find().populate('blogid','title').populate('user','name');
+    const user = req.user;
+    let comments;
+    if(user.role === 'admin'){
+
+      const comments = await Comment.find().populate('blogid','title').populate('user','name');
+
+    } else {
+
+      const comments = await Comment.find({ author: user._id }).populate('blogid','title').populate('user','name');
+    }
+   
+   
     res.status(200).json({
         comments
     }); 

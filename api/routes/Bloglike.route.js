@@ -1,5 +1,6 @@
 import express from "express";
 import { doLike, likeCount } from "../controller/BlogLike.controller.js";
+import { authenticate } from "../middleware/authenticate.js";
 
 
 const BlogLikeRoute = express.Router();

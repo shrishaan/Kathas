@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button } from "./Button";
 import { MdLogin } from "react-icons/md";
 import SearchBox from "./SearchBox";
-import { RouteIndex, RouteProfile, RouteSignIn } from "@/helpers/RouteName";
+import { RouteBlogAdd, RouteIndex, RouteProfile, RouteSignIn } from "@/helpers/RouteName";
 import { useDispatch, useSelector } from "react-redux";
 import {
   DropdownMenu,
@@ -63,7 +63,7 @@ const Topbar = () => {
   return (
     <div className="flex justify-between items-center h-16 fixed w-full z-20 bg-white px-5 border-b">
       <div>
-        <img src={logo} onClick={() => navigate(RouteSignIn)} style={{ cursor: "pointer" }} />
+        <img src={logo} onClick={() => navigate(RouteIndex)} style={{ cursor: "pointer" }} />
       </div>
       <div className="w-[500px]">
         <SearchBox />
@@ -114,7 +114,7 @@ const Topbar = () => {
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild className="cursor-pointer">
-                <Link to="">
+                <Link to={RouteBlogAdd}>
                   <FaPlus />
                   Create Blog
                 </Link>
